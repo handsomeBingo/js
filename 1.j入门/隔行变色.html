@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        ul{
+            margin: 0 auto;
+            border: 1px solid orange;
+            border-radius: 3px;
+            background-color: black;
+            width: 500px;
+        }
+        li{
+            height: 30px;
+
+            line-height: 30px;
+
+            padding-left: 20px;
+        }
+        .bg1{
+            background-color: aqua;
+        }
+        .bg2{
+            background-color: red;
+        }
+
+
+    </style>
+</head>
+<body>
+<ul id="box">
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+    <li>中悬着 振文 第252张</li>
+</ul>
+
+<script>
+    //隔行变色的思路：奇数行class值设置bg1 偶数行class值设置bg2
+    //要操作谁就获取谁
+//    document.getElementById(ID)
+//    document.getElementsByTagName()
+
+
+    var box=document.getElementById('box');
+    var  lis=box.getElementsByTagName('li')
+    //奇数行 class设置为bg1 偶数行class设置为bg2
+//    console.log(lis);//提供了一个索引 length是类数组的长度
+//    console.log(lis[0]);//输出第一个li
+    for (var i=0;i<lis.length;i++) {
+        //lis[i]
+        //奇数行的索引是偶数，第一行索引为偶数 class=bg1
+        //第二行索引为奇数 class=bg2
+        //通过%（取余数）的方式来判断奇偶数    }
+//        if (i % 2 == 0) {
+//            lis[i].className = 'bg1';
+//        }//给对应的i设置class为bg1
+//        else if (i % 2 == 1) {
+//            lis[i].className = 'bg2';
+//        }
+         i%2==0?lis[i].className='bg1': lis[i].className='bg2';
+    }
+</script>
+</body>
+</html>

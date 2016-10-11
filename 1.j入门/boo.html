@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+//    0 NaN "" null undefined 转化为boo数据类型为false 其余为true
+//
+//    1)! 取反 先转化为布尔数据类型再取反
+//    2)!! 转化为布尔类型
+//    3)Boolean() ；将其他数据类型转化为布尔数据类型= ！！
+//    !!5=Boolean(5)
+= 赋值
+== 相对比较 在数据类型不同时会进行一个数据转换再进行比较 相同数据类型直接比较
+    === 严格比较 数据类型和值必须完全相等返回值才true 若数据都不相同则直接返回false
+    不同数据类型的比较
+    转化 转为数字Number(需要转化的值)  转化为字符串(需要转化的值).toString   Boolean(需要转化的值)
+    1）对象==字符串 对象转换为字符串
+    2)数组==字符串 数组转化为字符串
+    3)对象==布尔  对象转换为字符串再转为数字，布尔转化和数字，然后两个数字比较
+    4）对象==数字  对象转换为字符串再转为数字 再比较
+    5）布尔==字符串 都转化为数字
+    6）布尔==数字   布尔转为数字
+    7）字符串==数字 字符串转换为数字
+    8）null==undefined;返回值是true
+    9）null或者undefined和其他任何数据类型相比较返回值为false
+
+
+//
+//[]==false 返回true
+//    ！[]=false 返回true
+//{}==false 返回值是  false 空对象{}转化为字符串"[object Object]"  false转化为数字是0 所以返回值为false
+
+
+
+    6、基本数据类型和引用数据类型的本质区别
+    基本数据类型操作的是值
+    引用数据类型操作的是地址
+    7、检测数据类型
+    1)typeof 返回值是字符串包裹着数据类型 形如 typeof 123 返回值是“number”  特殊：typeof null 返回值是object
+    typeof 不能细分对象数据类型下的具体类型 如 typeof {}返回值为object typeof []返回值也是object
+    2)constructor
+    3)instanceof
+    4)Object.prototype.toString.call();
+
+
+</script>
+</body>
+</html>

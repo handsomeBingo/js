@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>九九乘法口诀表</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        ul{
+            list-style: none;
+        }
+        #box{
+            width: 900px;
+            height: 270px;
+            border: 1px solid yellow;
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left:0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            overflow: hidden;
+        }
+        li{
+            height: 30px;
+        }
+        li span{
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            float: left;
+        }
+        .bg1{
+            background: deeppink;
+        }
+        .bg2{
+            background: gold;
+        }
+        .bg3{
+            background: lightgreen;
+        }
+        .bg4{
+            background: purple;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+    //拼接字符串
+    //第一个li i=1 1个span
+    //第二个li i=2 2个span
+    //第三个li i=3 3个span
+    //i是几就会有几个span
+    var str='';
+    str+='<ul>';
+    for(var i=1;i<=9;i++){
+        str+='<li>';
+        for(var j=1;j<=i;j++){
+            str+='<span>';
+            str+=j+'*'+i +'='+i*j;
+            str+='</span>';
+        }
+        str+='</li>';
+    }
+    str+='</ul>';
+    var box=document.getElementById('box');
+    box.innerHTML=str;
+
+    var lis=document.getElementsByTagName('li');
+    for(var i=0;i<lis.length;i++){
+        if(i%2==0){
+            lis[i].className='bg1';
+            lis[i].raininjune='bg1'
+        }
+        else if(i%2==1){
+            lis[i].className='bg2';
+            lis[i].raininjune='bg2'
+        }
+        if(i%3==0){
+            lis[i].className='bg3';
+            lis[i].raininjune='bg3';
+        }
+        lis[i].onmouseover=function(){
+            this.className='bg4';
+
+        }
+        lis[i].onmouseout=function(){
+            this.className=this.raininjune;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

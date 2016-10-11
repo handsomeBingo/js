@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //function:函数 即一个方法或者是一个功能 包括两部分 第一部分：创建一个函数；第二部分：执行函数；
+//    function 方法名(){
+//        函数体实现该功能的js代码
+//    }
+    //实现一个求和的方法
+    function sum (){
+        var total=0;
+        total=1+1;
+        console.log(total);
+    }
+    //函数形参 形参：相当于入口 如果形参不设则默认undefined,1+undefined=NaN
+    function sum(a,b){
+        var total=0;
+        total=a+b;
+        console.log(total);
+    }
+//    console.log(sum)输出的就是函数那一堆代码
+//    执行该函数 格式 方法名（） 一个函数可以执行多次 且每次执行之间没有关系 你想执行几次或者在哪里执行就在那里写函数名（）就可以了
+
+    sum();//在函数创建的时候函数体内的相当于一堆没有任何意义的字符串 只有在执行的时候才会将函数体里的代码转化为js代码执行
+    //return+变量
+    function sum(a,b){
+        var total=0;
+        total=a+b;
+        return total
+    }
+    console.log(sum(100,200)) 这时输出的是函数返回值，如果没有返回值，则输出undefined，返回值是输出的返回值添加的变量所代表的值。
+
+
+</script>
+</body>
+</html>

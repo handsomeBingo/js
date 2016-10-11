@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html,body{
+            margin:0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body id="box" style="background-color:white">
+<script>
+    //思路
+    //获取要操作的元素
+   var box=document.getElementById("box")
+
+    //给药操作的元素添加点击事件 格式 元素.onclick=function(){}  onclick onmouseover onmouseout
+    box.onclick=function(){
+        //点击执行时切换背景颜色(代码) 先判断当前背景颜色 如果是白色设置为黑色 如果是黑色再设置为白色
+//        box.style.backgroundColor 获取的是行内的css样式 所以行内必须有这一样式，外链的不可以 注意color的c大写！！！
+        var bg=box.style.backgroundColor
+//        if(bg=='white'){
+//            box.style.backgroundColor='black';
+//        }else{
+//            box.style.backgroundColor='white';
+//        }
+// 三元运算符 bg=='white'?box.style.backgroundColor='black':box.style.backgroundColor='white'
+        var bg=this.style.backgroundColor
+        if(bg=='white'){
+            this.style.backgroundColor='black';
+        }else{
+           this.style.backgroundColor='white';
+        }
+        //this 是指当前操作的元素。
+
+    }
+
+
+
+
+
+
+</script>
+</body>
+</html>

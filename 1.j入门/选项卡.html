@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        .box{
+            width: 306px;
+            margin: 10px auto;
+        }
+        ul,li{
+            list-style: none;
+            overflow: hidden;
+        }
+        li{
+            float: left;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid yellow;
+            text-align: center;
+
+        }
+
+        .box div{
+            display: none;
+            width: 304px;
+            height: 200px;
+            border: 1px solid aquamarine;
+            font-size: 36px;
+            font-weight: 900;
+            border-top: none;
+        }
+       li.active{
+            background: deeppink;
+        }
+        .box div.active{
+            display: block;
+
+        }
+    </style>
+
+</head>
+<body>
+<div class="box" id="box">
+    <ul>
+        <li class="active">中国A股</li>
+        <li>港股</li>
+        <li>全球</li>
+    </ul>
+    <div class="active">内容1</div>
+    <div>内容2</div>
+    <div>内容3</div>
+</div>
+    <script>
+        //思路 鼠标经过哪个li时，该li和div添加类名active，其他的li和div去掉类名active
+        //获取要操作的元素
+//        document.getElementsByTagName('li')
+        //document 文档 获取元素的范围 get 获取 Elements 一组元素 By通过 TagName
+        var box=document.getElementById('box');
+        var lis=box.getElementsByTagName('li');
+        var divs=box.getElementsByTagName('div');
+        //添加一个鼠标onmouseover 鼠标移入时间  元素.onmouseover=function(){ 鼠标移入执行的操作}
+        console.log(lis);
+        console.log(lis[0]);
+        for(var i= 0;i<lis.length;i++){
+            //给每一个li加一个鼠标移入事件 lis[i]代表
+            lis[i].zf=i;
+            lis[i].onmouseover=function(){
+                //先将其他的li和div的类名active去掉，给移入地li
+                for(var j=0;j<lis.length;j++){
+                    lis[j].className='null';
+                    divs[j].className='null';//本段代码是清空原有类名
+                }
+                //将鼠标移入的li加上active
+                this.className='active';
+                divs[this.zf].className='active';
+
+
+            }
+
+        }
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
