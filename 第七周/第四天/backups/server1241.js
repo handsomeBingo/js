@@ -14,8 +14,8 @@ var server1 = http.createServer(function (request, response) {
         query = obj.query;
 
     //->判断请求的是否为index.html，如果是的话，我们把index.html中的源代码得到，通过response.end返回给客户端，但是不要忘记，我们还需要重写响应头信息，从而告诉客户端返回的源代码是什么格式的(MIME类型)
-    if (pathname === '/index.html') {
-        var conFile = fs.readFileSync('./index.html', 'utf-8');
+    if (pathname === '/css3选择器.html') {
+        var conFile = fs.readFileSync('./css3选择器.html', 'utf-8');
         response.writeHead(200, {'content-type': 'text/html;charset=utf-8;'});
         response.end(conFile);
     }

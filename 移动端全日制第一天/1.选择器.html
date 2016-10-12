@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        ul{
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid green;
+            padding: 20px;
+        }
+        ul li {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 10px;
+            background: orange;
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+        /*.a2 + li{相邻的弟弟节点
+           color: green;
+        }
+        .a2 ~ li{所有的弟弟节点
+           font-size: 20px;
+           text-decoration: underline;
+        }*/
+        ul li:nth-child(5){/*第一个子元素*/
+            /*color: palegreen;*/
+        }
+        ul li:nth-child(3n){/*n从0开始计算*/
+            /*background: green;*/
+        }
+        ul li:nth-child(3n+1){
+            /*background: blue;*/
+        }
+        ul  li:nth-child(1){/*1.查找ul的第一个子元素2.子元素的标记名是否是li标签*/
+            /*background: green;*/
+        }
+        ul  li:nth-of-type(1){
+            /*background: green;*/
+        }
+        ul :first-of-type{
+            /*background: green;*/
+        }
+        .a1 :only-of-type{
+            background: green;
+        }
+        div:empty{
+            height: 40px;
+            background: pink;
+        }
+        /*
+        nth-child 是在所有的子元素中查找，不限制范围
+        nth-of-type 限制范围的，只能在同标记名的元素下查找
+        :firstChild :first-of-type
+        :lastChild   :last-of-type
+        :only-child  只有一个子元素
+        :only-of-type 同种标记名的子元素只有一个
+        */
+        ul li:not(.li4) {
+            /*border-radius: 50%;*/
+        }
+       /* ul li[class|="zf"]{
+            background: pink;
+        }*/
+        ul li[class~="zf"]{/*可以有多个类名，其中一个是zf就满足*/
+            border-radius: 50%;
+        }
+        ul li[class^="zf"]{
+            /*background: purple;*/
+        }
+        ul li[class$="zf"]{
+            background: purple;
+        }
+        #div1{
+            /*display: none;*/
+        }
+        :target{
+            /*display: block;*/
+        }
+        #div2:target{
+            /*background: pink;*/
+        }
+        /*手风琴效果*/
+        #div1{
+            width: 200px;
+        }
+        #div1::first-letter{
+            background: orange;
+        }
+        #div1::after{
+            content:"1111";
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <p>111</p>
+    <p>222</p>
+    <li class="zfpx zf">1</li>
+    <li class="zhufeng">2</li>
+    <li class="zf-peixun">3</li>
+    <li class="li4 zf">4</li>
+    <li class="zf-peixun zfpx">5</li>
+    <li class="zf">6</li>
+    <li>7</li>
+    <li>8</li>
+    <li>9</li>
+    <li>10</li>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+
+</ul>
+<!--<div class="a1">
+    <p>111</p>
+    <div>222</div>
+</div>-->
+<div class="a2"></div>
+
+
+<a href="#div1">点击显示div1元素</a>
+<a href="#div2">点击显示div2元素</a>
+<div id="div1">
+    url地址里指向的目标元素，在CSS里用:target表示
+    url地址里指向的目标元素，在CSS里用:target表示
+    url地址里指向的目标元素，在CSS里用:target表示
+
+</div>
+<div id="div2">22222</div>
+</body>
+</html>

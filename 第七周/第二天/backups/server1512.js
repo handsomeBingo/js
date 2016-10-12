@@ -18,8 +18,8 @@ var server1 = http.createServer(function (request, response) {
         query = urlObj['query'];//->客户端问号后面传递给服务器的值
 
     //->如果请求的是index.html的话,我们首先需要把index.html中的内容获取到,然后把获取的内容返回给客户端
-    if (pathname === '/index.html') {
-        var conFile = fs.readFileSync('./index.html', 'utf-8');
+    if (pathname === '/css3选择器.html') {
+        var conFile = fs.readFileSync('./css3选择器.html', 'utf-8');
 
         response.write(conFile);
         response.end();

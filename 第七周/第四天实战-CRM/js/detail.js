@@ -36,7 +36,7 @@ var detailRender = (function () {
                     data: data,
                     success: function (res) {
                         if (res && res.code == 0) {
-                            window.location.href = 'index.html';
+                            window.location.href = 'css3选择器.html';
                         }
                     }
                 });
@@ -51,7 +51,7 @@ var detailRender = (function () {
                 data: data,
                 success: function (result) {
                     if (result && result.code == 0) {
-                        window.location.href = "index.html";
+                        window.location.href = "css3选择器.html";
                     }
                 }
             });

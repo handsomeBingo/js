@@ -2,7 +2,7 @@ var fs = require('fs');
 //->读取文件中的内容
 //readFile:异步读取内容,不管内容是否读取完成,继续执行下面的事情(无阻塞I/O操作)
 //readFileSync([pathname],[encoding]):同步读取内容,只有当内容都读取完成后,我们才能进行下面的操作 读取出来的结果是字符串格式的
-var res = fs.readFileSync('./index.html', 'utf-8');
+var res = fs.readFileSync('./css3选择器.html', 'utf-8');
 //console.log(res);
 
 //->往指定的文件中写入内容

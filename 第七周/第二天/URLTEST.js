@@ -13,13 +13,13 @@ var url = require('url');
     hash: '#aa',  哈希值
     search: '?name=zf&age=8', 问号及传递的值
     query: 'name=zf&age=8', 传递的值
-    pathname: '/index.html', 请求资源的目录名称(在字符串的最前面会加一个左斜杠)
-    path: '/index.html?name=zf&age=8', pathname+search
+    pathname: '/css3选择器.html', 请求资源的目录名称(在字符串的最前面会加一个左斜杠)
+    path: '/css3选择器.html?name=zf&age=8', pathname+search
     href: 'http://www.zhufengpeixun.cn:80/index.html?name=zf&age=8#aa' 我解析的原始的URL地址
    }
  */
 
-var res = url.parse('http://www.zhufengpeixun.cn:80/index.html?name=zf&age=8#aa',true);
+var res = url.parse('http://www.zhufengpeixun.cn:80/css3选择器.html?name=zf&age=8#aa',true);
 console.log(res);
 /*
  {

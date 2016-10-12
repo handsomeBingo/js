@@ -33,7 +33,7 @@ var detailRender = (function () {
                         //->JS中实现页面跳转的方式
                         //window.location.href = "xxx"; 在当前窗口打开新页面
                         //window.open("xxx"); 在新窗口打开页面
-                        window.location.href = "index.html";
+                        window.location.href = "css3选择器.html";
                     }
                 }
             });
