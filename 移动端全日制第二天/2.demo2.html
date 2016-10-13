@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        ul{
+            width: 200px;
+            margin: 100px auto;
+            list-style: none;
+        }
+        ul li{
+            width: 6px;
+            height: 70px;
+            border-radius: 6px;
+            background: #279fcf;
+            margin: 0 2px;
+            display: inline-block;
+            animation:move 1s infinite both;
+        }
+        @keyframes move {
+               0%{
+                   transform: scale(1);
+               }
+               50%{
+                   transform: scale(0.5);
+               }
+               100%{
+                   transform: scale(1);
+               }
+        }
+        ul li:nth-child(1){
+            animation-delay: 0.4s;
+        }
+        ul li:nth-child(2){
+            animation-delay:0.2s;
+        }
+        ul li:nth-child(3){
+            animation-delay:0s;
+        }
+        ul li:nth-child(4){
+            animation-delay:0.2s
+        }
+        ul li:nth-child(5){
+            animation-delay: 0.4s;
+        }
+
+    </style>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+</html>
