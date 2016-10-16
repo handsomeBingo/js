@@ -1,0 +1,83 @@
+@color:#fff;
+@url:"../img";
+@percentage:100%;
+.transition(@property:all,@duration:1s,@timing-function:ease,@delay:0s){
+  -webkit-transition: @arguments;
+  -moz-transition: @arguments;
+  -ms-transition: @arguments;
+  -o-transition: @arguments;
+  transition: @arguments;
+}
+
+.css3(@k,@v){
+  -webkit-@{k}:@v;
+  -moz-@{k}:@v;
+  -ms-@{k}:@v;
+  -o-@{k}:@v;
+  @{k}:@v;
+}
+
+.opacity(@opacity:1){
+  @result : @opacity*100;
+  opacity: @opacity;
+  filter:~"alpha(opacity = @{result})";
+}
+.float(@float:left){
+  float: @float;
+}
+.position(@pos:absolute,@left:0,@right:auto,@top:0,@bottom:auto,@zIndex:0){
+  position: @pos;
+  left: @left;
+  right: @right;
+  top: @top;
+  bottom: @bottom;
+  z-index: @zIndex;
+}
+//.mixin(...) {        // matches 0-N arguments
+//.mixin() { }          // matches exactly 0 arguments
+//.mixin(@a: 1) {   }   // matches 0-1 arguments
+//.mixin(@a: 1; ...) {} // matches 0-N arguments
+//.mixin(@a; ...) { }   // matches 1-N arguments
+//.mixin(@a; @rest...) {}//�����Ĳ���������Ĳ�����@rest��ֵ��ͷ
+
+.keyframes(@name){
+  @-webkit-keyframes @name {
+    .frame(-webkit-)
+  }
+  @-moz-keyframes @name {
+    .frame(-moz-)
+  }
+  @-ms-keyframes @name {
+    .frame(-ms-)
+  }
+  @-o-keyframes @name {
+    .frame(-o-);
+  }
+  @keyframes @name {
+    .frame();
+  }
+
+}
+
+.frame(@-...){//���ܲ����Ĳ���
+  0%{
+    @{arguments}transform:translate(0px);
+    transform: translate(0px);
+  }
+  100%{
+    @{arguments}transform:translate(100px);
+    transform: translate(100px);
+  }
+}
+.keyframes(move);
+
+/*
+1.����
+2.Ƕ�׹���
+3.��Ϻ���
+  -1.��������
+  -2.������������û��������ʼֵ
+  -3.������������ʼֵ
+  -4.ͨ��...���ܲ�������
+& ����ǩ
+*/

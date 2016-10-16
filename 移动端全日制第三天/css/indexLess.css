@@ -1,0 +1,129 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  height: 580px;
+  position: relative;
+}
+.wrap {
+  position: absolute;
+  left: 0;
+  right: auto;
+  top: 0;
+  bottom: auto;
+  z-index: 10;
+  width: 100%;
+  height: 89px;
+  background: url(../img/nav-b.png) repeat-x;
+}
+.nav {
+  width: 100%;
+}
+.nav h1 {
+  float: left;
+  margin-top: 18px;
+}
+.nav ul {
+  height: 100%;
+  float: right;
+}
+.nav ul li {
+  position: relative;
+  height: 100%;
+  float: left;
+}
+.nav ul li a {
+  position: relative;
+  z-index: 10;
+  display: block;
+  padding: 0 30px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  line-height: 89px;
+}
+.nav ul li a span {
+  position: absolute;
+  left: 0;
+  right: auto;
+  top: 0;
+  bottom: auto;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  filter: alpha(opacity = 0);
+}
+.nav ul li a:hover {
+  color: #fff;
+}
+.nav ul li a:hover span {
+  opacity: 1;
+  filter: alpha(opacity = 100);
+  -webkit-animation: move 0.5s 1 both;
+  -moz-animation: move 0.5s 1 both;
+  -ms-animation: move 0.5s 1 both;
+  -o-animation: move 0.5s 1 both;
+  animation: move 0.5s 1 both;
+}
+@-webkit-keyframes move {
+  0% {
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+  }
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-moz-keyframes move {
+  0% {
+    -moz-transform: scale(0, 1);
+    transform: scale(0, 1);
+  }
+  100% {
+    -moz-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-ms-keyframes move {
+  0% {
+    -ms-transform: scale(0, 1);
+    transform: scale(0, 1);
+  }
+  100% {
+    -ms-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-o-keyframes move {
+  0% {
+    -o-transform: scale(0, 1);
+    transform: scale(0, 1);
+  }
+  100% {
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@keyframes move {
+  0% {
+    transform: scale(0, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+/*banner����*/
+.banner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.slideA {
+  width: 100%;
+  height: 100%;
+  background: #183e84;
+}
