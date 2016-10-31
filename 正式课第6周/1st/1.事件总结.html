@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件的兼容性</title>
+</head>
+<body>
+1.e的兼容性
+1）e=e||window.event;
+2)e.target=e.target||e.srcElement;
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+3)e.stopPropagation();/e.cancelBubble=true;(阻止事件的默认行为：a标签的跳转；小窗口的鼠标滚轮事件（有兼容性问题ie（onmousewheel）和火狐(必须用dom2级事件来处理)）；鼠标右键菜单（上下文菜单）document.contextmenu=function(){return
+false}；如何自定义一个上下文菜单？)
+！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+4)e.preventDefault();/e.returnValue=false;return false;
+5）e.pageX=(docment.documentElement.scrollLeft||document.body.scrollLeft)+clientX;
+6)e.pageY....
+
+addEventListener();兼容性问题attchEvent();
+1）重复绑定问题
+2）顺序错乱
+3）this问题
+function on(ele,eventType,fn){
+if(ele.addEventListenr){
+ele.addEventListener(eventType,fn);
+return;
+}
+if(!ele["myevent"+eventType]){
+ele["myevent"+eventType]=[];
+ele.attachEvent("on"+eventType,fn);
+}
+var a= ele["myevent"+eventType];
+for(var i=0;i< a.length;i++){
+if(a[i]==fn){
+return;
+}
+a.push(fn);
+
+}
+
+</body>
+<!--<script>-->
+<!--var odiv = document.createElement("div");-->
+<!--with (odiv.style) {-->
+<!--width = "150px";-->
+<!--height = "150px";-->
+<!--background = "gray";-->
+<!--display = "none";-->
+<!--position = "absolute";-->
+<!--}-->
+<!--document.body.appendChild(odiv);-->
+<!--document.oncontextmenu = function (e) {-->
+<!--e.preventDefault();-->
+
+<!--//        e=e||window.event;-->
+<!--with (odiv.style) {-->
+<!--left = e.pageX + "px";-->
+<!--top = e.pageY + "px";-->
+<!--display = "block";-->
+<!--}-->
+<!--}-->
+<!--document.body.onclick = function (e) {-->
+
+
+<!--e.target == odiv ? void 0 : odiv.style.display = "none";-->
+
+
+<!--}-->
+<!--</script>-->
+<script>
+    document.body.onclick = function (e, x, y) {
+        console.log(arguments);
+    };//不可以用bind修改this和向里面传参
+    /*4、事件对象获得的方式不同
+     标准浏览器是有浏览器动态的传一个参数，这个参数是事件对象
+     ie是有一个全局的对象，window.event，这是事件对象
+     chrome都支持
+     5、dom2级事件的绑定的方法不同
+     5.1绑定方法不同
+     5.2被绑定到事件上的方法。当事件触发执行的时候，this指向不同，ie中指向window，标准浏览器中指向当前元素
+     5.3ie浏览器方法绑定的顺序和执行的顺序不同，是混乱的
+     5.4ie中一个方法可以在同一阶段同一事件类型可以重复绑定
+
+
+
+     */
+</script>
+
+</html>

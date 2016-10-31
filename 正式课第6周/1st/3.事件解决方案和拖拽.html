@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            -webkit-user-select: none;
+        }
+
+        div img {
+            width: 100%;;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="top: 100px;left: 200px;background: purple"><img src="image123/1.png" alt=""></div>
+<div id="div2" style="top: 200px;left: 200px;background: purple"><img src="image123/2.png" alt=""></div>
+<div id="div3" style="top: 300px;left: 200px;background: purple"><img src="image123/3.jpg" alt=""></div>
+<div id="div4" style="top: 400px;left: 200px;background: purple"><img src="image123/1.png" alt=""></div>
+</body>
+<script>
+    var odiv = document.getElementById("div1");
+    //1.ie里用attachEvent,标准浏览器用addEventListener，现在统一用bind来绑定事件，用unbind来移出事件
+    //2.绑定到事件上的方法，在事件被触发运行的时候，this要指向被绑定的元素,解决this关键字是ele.attachEvent("on"+eventType,function(){fn.call(ele)});是最核心的代码，但是这样只能解决绑定的问题，但是移除的时候就不到这个匿名函数，注意，fn并没有直接绑定给事件
+    //3.通过这个两个方法，逐渐培养思想，跨作用域考虑代码的写法（在一个方法里写的代码，是为了另一个方法能够工作）
+    function bind(ele, eventType, fn) {//bind方法是负责dom2级事件的绑定,三个参数，ele,绑定事件的元素，eventType事件类型，fn是绑定方法
+        if (ele.addEventListener) {
+            ele.addEventListener(eventType, fn);
+        } else {
+            //现在需要function(){fn.call(ele)}保存下来，不但要保存下来，还要能在后面的方法中能通过fn找见他；所以就需要就做以下的工作了
+            //1)、有一个保存经过fn改造后的那些方法的数组
+            if (!ele["aBind" + eventType]) {
+                ele["aBind" + eventType] = [];//例如ele[click],dom对象自带click方法，如果不加前缀aBind，就会和自带的click冲突，eventType是区分符，将不同的事件类型保存到不同的数组里了，
+            }
+            var a = ele["aBind" + eventType];
+            //第二步,改造fn，使fn无论在什么情况下被执行，其this都会指向ele
+
+            //解决重复绑定
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].origin == fn) {
+                    return;
+                }
+            }
+            var fnTemp = function () {
+                fn.call(ele);
+            };
+            //给改造后的fnTemp加一个戳记，以便在后面的unbind中能通过fn找到fnTemp
+            fnTemp.orgin = fn;
+            //第三步，把改造后的方法保存下来，
+            a.push(fnTemp);
+            //把改造后的fnTemp绑定给事件
+            ele.attachEvent("on" + eventType, fnTemp);
+        }
+    }
+
+    function unbind(ele, eventType, fn) {
+        if (ele.removeEventListener) {
+            ele.removeEventListener(eventType, fn);
+        } else {
+            //通过fn把真正绑定懂啊事件上的那个方法识别出来
+            var a = ele["aBind" + eventType];
+            if (a && a.length) {
+                if (a[i].origin == fn) {
+                    for (var i = 0; i < a.length; i++) {
+                        ele.detachEvent("on" + eventType, a[i])
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    //ie中无法解决的顺序问题，我们把ie事件机制，将ie的事件机制推翻，然后重写一套机制，来解决这个问题，相当于半个订阅发布模式
+    /*
+     * on方法：赋值约定，订阅，绑定把方法先保存到一个事件池中，
+     * run：通知机制，所谓通知是去事件已经准备好的那个程序池里，遍历执行保存在里面的那些方法
+     * off：
+     *
+     *
+     * */
+    function on(ele, eventType, fn) {//负责挖程序池，并且把需要绑定的方法保存懂啊程序池中
+        if(ele["aEvent"+eventType]){
+            ele["aEvent"+eventType]=[];
+        }
+        var a=ele["aEvent"+eventType];
+        for(var i=0;i< a.length;i++){
+            if(a[i]==fn){
+                return;
+            }
+        }
+        a.push(fn);
+        bind(ele,eventType,run);//用来触发run执行的代码
+
+
+
+    }
+
+    function run() {//负责找到程序池，然后执行这个数组里的所有的相关方法
+        var e=window.event;
+        if(!e.target){
+            e.target= e.srcElement;
+            e.pageX=(document.documentElement.scrollLeft||document.body.scrollLeft)+e.clientX;
+            e.pageY=(document.documentElement.scrollTop||document.body.scrollTop)+ e.clientY;
+            e.stopPropagation=function(){
+                e.cancelBubble=true;
+            };
+            e.preventDefault=function(){
+                e.returnValue=false;
+            }
+        }
+
+        var a=this["aEvent"+ e.type];
+        if(a&& a.length){
+            for(var i=0;i< a.length;i++){
+                if(typeof a[i]=="function"){
+                    a[i].call(this,e);//如果不call,a[i],中的this是数组a,a[i]()等效于a.i();
+                }else{
+                    a.splice(i,1);
+                    i--;
+                }
+
+            }
+        }
+
+    }
+
+    function off(ele, eventType, fn) {//负责对吧对应的方法重程序池里移除
+        var a=ele["aEvent"+eventType];
+        if(a&& a.length){
+            for(var i=0;i< a.length;i++){
+                if(a[i]==fn){
+                    a[i]=null;
+                    break;
+                }
+            }
+        }
+    }
+
+</script>
+</html>

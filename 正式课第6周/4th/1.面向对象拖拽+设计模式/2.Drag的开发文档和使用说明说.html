@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+这个订阅发布模式的意义是什么？将层具备基本功能的模块协调在在一起以实现综合功能
+
+Drag1.0产品使用说明及二次开发文档
+1、基本用法
+    1）比如有Dom元素，var ele=document.getElementById("box");使此元素实现拖拽：new Drag(ele);
+2、Drag类的基本构成
+        Drag.prototype.down 准备拖拽的方法
+        Drag.prototype.move 进行拖拽的方法
+        Drag.prototype.up   结束拖拽的方法
+
+        例如：Drag类的实例obj上有一个四个值得注意的是属性obj.x;obj.y;obj.mx;obj.my,尤其是this.ele是保存的被拖拽的DOM元素
+3、扩展新功能
+    使用事件绑定的方式来实现新的功能；
+    1）如果在拖拽开始阶段扩展功能，使用"dragstart";
+    用法示例
+        obj.on("dragstart",fn);
+    2）如果在拖拽进行的阶段则使用"dragging"
+    用法示例
+        obj.on("dragging",fn);
+    3）如果在拖拽结束阶段扩展新功能，则使用"dragend"
+    用法示例
+        obj.on("dragend",fn);
+
+//////////////////////////////////////////////////////////////////////////////
+Drag1.1产品使用说明及二次开发文档
+
+增加了一个限制拖拽的功能
+obj.range({left:100,top:0,right:500,bottom:400});
+表示此拖拽只能在水平方向从100到500，垂直方向从0到400；
+这个功能也可以不固化在Drag产品（不写在原型上），让用户自行开发也是可以的；
+
+////////////////////////////////////////////////////////////////////////////
+Drag1.2产品使用说明及二次开发文档
+
+增加了一个拖拽时出现边框的效果
+拖拽开始的时候出现边框，当拖拽结束时边框消失
+obj.border();
+
+
+</body>
+</html>

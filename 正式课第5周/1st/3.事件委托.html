@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>事件委托</title>
+    <style>
+        li{
+            width:200px;
+            height:50px;
+            margin-top: 10px;
+            border: 1px solid black;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul">
+    <li id="outer">1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+</ul>
+</body>
+<script>
+    var lis=document.getElementsByTagName("li");
+  /*  for(var i=0;i<lis.length;i++){
+        lis[i].onclick=function(){
+            console.log(this.innerHTML);
+        }
+        给li绑定事件需要分别给每一个li的事件onclick属性赋值一个函数，过于浪费内存
+    }*/
+ /*   var body=document.body;
+    body.onclick=function(e){
+        e.target= e.target|| e.srcElement;
+        console.log(e.target.innerHTML)
+    }*/
+/*
+* 事件委托：当需要给页面内多个元素绑定事件是可以考虑你利用时间委托，一般情况下和e.target连用
+* e.target:事件对象，事件发生函数执行的时候打印的arguments[0]，纪录事件发生时刻的相关信息
+* 上例将li的点击事件委托给body处理
+* 委托事件利用的是事件的冒泡传播机制；
+* 事件委托的区分，给事件源添加某些属性加以区分，属性可以是内置的可以是自定义的
+* 事件委托不仅可以委托给body还可以委托ul
+* */
+
+    /*
+    * 事件绑定分为dom0级事件和dom2级事件!!
+    *   1）document.onclick=function(){};dom0级事件没有捕获，全部是在冒泡阶段触发，只有dom2级事件才能控制在捕获阶段触发事件，但是在编程过程中不常用
+    *   2）outer.addEventListener("click",function(){},false);
+    *   addEventListener:
+    *   第一个参数：事件类型
+    *   第二个参数：事件发生的时候执行的操作；
+    *   第三个参数：true/false：在捕获(true)阶段触发或在冒泡(false)阶段触发
+    *
+    *
+    * */
+   //事件触发的顺序是先捕获后冒泡，即先执行在捕获阶段绑定的事件，再执行在冒泡阶段的事件；
+    /*
+    * 阻止事件传播；
+    * e.stopPropagation();但是在ie下不兼容ie兼容写法：e.cancelBubble=true;
+    * a标签阻止跳转事件，在a的点击事件中return false；也可以阻止跳转，而且没有兼容性问题
+    *
+    *
+    *
+    * */
+
+</script>
+</html>

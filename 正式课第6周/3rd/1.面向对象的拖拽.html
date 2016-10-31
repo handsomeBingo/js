@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            -webkit-user-select: none;
+            overflow: hidden;
+            background: gray;
+        }
+
+        div img {
+            width: 100px;
+            height: 100px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="top:100px;left: 100px;"><img src="image123/1.png" alt=""></div>
+<div id="div2" style="top:150px;left: 200px;"><img src="image123/2.png" alt=""></div>
+<div id="div3" style="top:200px;left: 300px;"><img src="image123/3.jpg" alt=""></div>
+<div id="div4" style="top:250px;left: 400px;"><img src="image123/1.png" alt=""></div>
+</body>
+<script src="event2.js"></script>
+<script>
+    /**
+     * 1、面向对象的编程，主要是思想和管理，重管理轻逻辑，相对于面向过程，面向过程的编程时重逻辑的编程
+     * 2、面向对象先要确定一个主体对象（上下文），所有的行为（方法）和属性是依赖于这个主体的 ele.addEventListener();ele承载了所有的addEventListener这个方法的上下文，所以ele就是主体对象；
+     * div-->HTMLElement-->....
+     * 3、EventTarget类是管理行为与行为之间的关系的，管理节点上的行为与其他行为对接的类就是EventTarget类
+     * 4、何时需要面向对象？只注重逻辑不需要面向对象，如果用面向对象来完成一个单一的拖拽，除了麻烦，没什么优点
+     *
+     *
+     *
+     *
+     * */
+    //确定使用类或类上的方法的时候，一个非常重要的原则，在类上的方法里，this关键字一定要指向当前的实例，因为明确方法或者属性的主体是实例，我们用类的概念就是为了管理实例；如果和事件绑定的原则冲突，则强制执行，通过call或apply强制改变this的指向，让其指向当前实例
+
+    function Drag(ele) {//初始化实例的作用，把实例上要用到的一些私有属性或方法，在这里准备好
+        this.x = null;
+        this.y = null;
+        this.mx = null;
+        this.my = null;
+        this.ele = ele;//通过参数把被拖拽的元素传进来，然后把它保存到实例的ele属性上，这样在其他的原型方法里就可以通过this.ele这个属性来操作这个被拖拽的元素了，一个方法的参数相当于这个方法的私有变量
+        //on(this.ele,"mousedown",this.down);这种绑定方式会导致this.down方法里的this就会指向ele，集合我们规定的原则冲突了；方法中的this是谁看不要看方法在哪里定义，而是要看方法在哪里执行，函数是在事件被触发才执行，而事件触发时，绑定给事件的方法中this就是绑定该事件的元素；而on(this.ele,"mousedown",this.down);这里this.down是属于方法的绑定即方法的定义阶段，这里并不能决定方法中的this是谁
+        //console.log(a instanceof Drag);
+        this.Move=processThis(this.move,this);
+        this.Down = processThis(this.down, this);
+        this.Up = processThis(this.up, this);
+        on(this.ele, "mousedown", this.Down);
+        //Down里有this，down里也有this，Down里的this是由它被绑定给谁决定的，但是down里的this已经被call给强制处理过了，所以down里的this无论是什么情况，都会是Drag类的实例；
+    }
+
+    Drag.prototype.down = function(e) {
+        this.x = this.ele.offsetLeft;
+        this.y = this.ele.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+        if (this.ele.setCapture) {
+            this.ele.setCapture();
+            on(this.ele, "mousemove", this.Move);
+            on(this.ele, "mouseup", this.Up);
+        } else {
+            on(document, "mousemove", this.Move);
+            on(document, "mouseup", this.Up);
+        }
+        e.preventDefault();
+    }
+
+    Drag.prototype.move = function (e) {
+        this.ele.style.left = this.x + (e.pageX - this.mx) + "px";
+        this.ele.style.top = this.y + (e.pageY - this.my) + "px";
+    }
+
+    Drag.prototype.up = function(e) {
+        if(this.ele.releaseCapture){
+            this.ele.releaseCapture();
+            off(this.ele,"mousemove",this.Move);
+            off(this.ele,"mouseup",this.Up);
+        }else {
+            off(document,"mousemove",this.Move);
+            off(document,"mouseup",this.Up);
+        }
+    }
+    var eles = document.getElementsByTagName("div");
+    for (var i = 0; i < eles.length; i++) {
+        new Drag(eles[i]);//如果创建一个没有赋值给一个变量，那这个实例存在吗？这里数据和变量的关系；答案是存在的，名字只是一个代号，便于操作和查找；变量和数据是两码事，变量只是用来代表数据而已；2）当使用new运算符去创建一个类的实例的时候发生什么？first：先创建一个属于这个类的实例，并且把这个实例返回，这时候实例已经拥有（这个拥有是指可以调用，并非私有）了这个类原型上的方法，然后以这个实例为主体（上下文），自动运行构造函数，构造函数中的this是指当前实例；类有两个身份，一个是类，一个是自动运行（因为在创建实例时，不传参时不需要小括号）的初始化函数；
+    }
+
+</script>
+</html>

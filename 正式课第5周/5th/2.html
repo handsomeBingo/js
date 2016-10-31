@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #box{
+            width:100px;
+            height:100px;
+            background: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+</body>
+<script>
+    var oDiv=document.getElementById("box");
+    oDiv.onmousedown=function(e){
+        e=e||window.event;
+        //把鼠标点击的那一刻的鼠标相对于盒子的坐标纪录在自己身上
+        oDiv.x= e.clientX-oDiv.offsetLeft;
+        oDiv.y= e.clientY-oDiv.offsetTop;
+        document.onmousemove=function(e){
+            e=e||window.event;
+            var l= e.clientX-oDiv.x;
+            var t= e.clientY-oDiv.y;
+            //把事件绑定给document是因为chrome中没有setCapture();这个方法是将元素和鼠标绑定好了，避免甩丢了；
+            oDiv.setCapture? oDiv.setCapture():null;
+            var minL=0;
+            var minT=0;
+            var maxL=(document.documentElement.clientWidth||document.body.clientWidth)-oDiv.offsetWidth;
+            var maxT=(document.documentElement.clientHeight||document.body.clientHeight)-oDiv.offsetHeight;
+
+            l= l<minL?minL:l>maxL?maxL:l;
+            t= t<minT?minT:t>maxT?maxT:t;
+
+            oDiv.style.left=l+"px";
+            oDiv.style.top=t+"px";
+
+        }
+        document.onmouseup=function(e){
+            oDiv.releaseCapture? oDiv.releaseCapture():null;
+            document.onmousemove=null;
+            document.onmouseup=null;
+        }
+    }
+</script>
+</html>

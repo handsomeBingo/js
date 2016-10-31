@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .box{
+            position: relative;
+            width:400px;
+            height:400px;
+            background: red;
+            margin:30px auto;
+        }
+        #mark{
+            position: absolute;
+            /*display: none;*/
+            width: 100px;
+            height:100px;
+            background: aqua;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="box" class="box"><!--<div id="mark"></div>--></div>
+</body>
+<script charset="utf-8">
+    var box=document.getElementById("box");
+    box.onmouseenter=function(e){
+        var div=document.createElement("div");
+        div.id="mark";//将id和id样式赋值给创建的div
+       /* div.onmouseover=function(e){
+            e=e||window.event;
+            e.stopPropagation?e.stopPropagation(): e.cancelBubble=true;
+        }
+        e.onmouseout=function(e){
+            e=e||window.event;
+            e.stopPropagation?e.stopPropagation(): e.cancelBubble=true;
+        }*/
+        this.appendChild(div);
+        console.log("over");
+
+    };
+    box.onmousemove=function(e){
+        e=e||window.event;
+        var mark=document.getElementById("mark");
+        var l= e.clientX-this.offsetLeft+10;
+        var t= e.clientY-this.offsetTop+15;
+        if(mark){//mark是通过js添加进来的，但是move和over事件之间变化是瞬间的，也许js还没有执行结束已经触发了move事件，有可能获取不到
+            mark.style.left=l+"px";
+            mark.style.top=t+"px";
+        }
+
+    }
+    box.onmouseleave=function(e){
+        var mark=document.getElementById("mark");
+        if(mark){
+            this.removeChild(mark);
+        }
+        console.log("out");
+    }
+
+
+</script>
+</html>

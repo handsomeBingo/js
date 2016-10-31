@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script charset="UTF-8">
+    //onload加载结束之后
+    window.onload=function(){
+        //这是dom0级事件，一个事件只能绑定一个函数
+        //页面内所有的标签和资源都加载完成之后
+    }
+
+    document.addEventListener("DOMContentLoaded",function(){
+        //网页内所有标签元素，加载完成之后就可以触发，比window.onload快
+        //这个事件只能通过dom2的方式绑定，可以绑定多个，
+        //如果要操作网页的元素，必须要保证元素已经存在
+
+    })
+    //对应jquery中也有类似方法
+    $(function(){
+        //这个方法相当于jqDOMContentLoaded
+        //使用jq，当浏览器打开就要操作元素的时候，可以在所有的代码最外层加一个这个函数
+        //如果想获取网页内的任何元素必须要等这些元素的dom结构已经加载完成之后
+    })
+//    以上方法等价于
+//    $(document).ready(function(){});
+</script>
+</html>

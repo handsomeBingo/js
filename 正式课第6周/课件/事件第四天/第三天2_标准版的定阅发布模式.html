@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+
+<script>
+
+function EventEmitter(){};//EventTarget的实现原理是一样
+EventEmitter.prototype.on=function(type,fn){//负责绑定事件
+	if(!this["aEmitter"+type]){
+		this["aEmitter"+type]=[];	
+	}
+	var a=this["aEmitter"+type];
+	for(var i=0;i<a.length;i++){
+		if(a[i]==fn)return;	
+	}
+	a.push(fn);
+}
+EventEmitter.prototype.fire=function(type,e){//负责通知，或叫“发布”事件
+	var a=this["aEmitter"+type];
+	if(a&&a.length){
+		for(var i=0;i<a.length;i++){
+			if(typeof a[i]=="function"){
+				a[i].call(this,e);
+			}else{
+				a.splice(i,1);
+				i--;
+			}
+		}
+	}
+}
+EventEmitter.prototype.off=function(type,fn){//负责移除事件
+	var a=this["aEmitter"+type];
+	if(a&&a.length){
+		for(var i=0;i<a.length;i++){
+			if(a[i]==fn){
+				a[i]=null;
+				break;	
+			}
+		}
+	}
+}
+
+//20分钟
+//利用中间20分钟时间
+//烧水---->喝热水，泡方便面，洗个澡
+//中间有20分钟，还可以做点其它的工作，等水开之后，它会自动的通知你来做其它的三件事
+
+//先要有一把水壶，然后运行水壶的烧水方法
+//在烧水方法执行之前，有一个事件绑定：就是让drink,noodles,shower这三个行为绑定烧水的行为，一但水开，会自动通知这个三个行为来执行
+
+function Kettle(){};
+Kettle.prototype=new EventEmitter;//这样的继承方式不能写在定义原型方法之后。
+//Kettle.prototype.__proto__=EventEmitter.prototype;//这是一种更安全的原型继承方式，它不会破坏Kettle类上原有的prototype，但是这种方式IE不支持
+Kettle.prototype.boiling=function(){
+	console.log("开始烧水");
+	
+	var that=this;
+	window.setTimeout(function(){
+		console.log("水已烧开");
+		that.fire("boiling");
+	},6000);
+}
+var k1=new Kettle;
+k1.on("boiling",drink);
+k1.on("boiling",noodles);
+k1.on("boiling",shower);
+k1.boiling();
+
+function drink(){
+	console.log("喝点开水");	
+}
+function noodles(){
+	console.log("泡包方便面");	
+}
+function shower(){
+	console.log("冲个热水澡");	
+}
+</script>

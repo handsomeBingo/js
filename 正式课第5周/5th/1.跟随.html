@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #b{
+            width: 800px;
+            height: 400px;
+            margin:30px auto;
+        }
+        .box{
+            float: left;
+            position: relative;
+            width:200px;
+            height: 200px;
+
+            box-shadow: 3px 3px 5px #ccc;
+            overflow: hidden;
+            padding-right: 10px;
+        }
+        .box img{
+            width:100%;
+            height:100%;
+            border:none;
+            vertical-align: top;
+        }
+        .box span{
+            display: block;
+            position: absolute;
+            left:-200px;
+            top:0;
+            width:200px;
+            height:200px;
+            background: green;
+            opacity: 0.3;
+            line-height: 200px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<!--Math.atan2(y,x);返回一个弧度制的角度x，y是点的坐标-->
+<div id="b">
+    <a id="box0" class="box">
+        <img src="image123/1.png" alt="">
+        <span class="mask">我是遮罩层1</span>
+    </a>
+    <a id="box1" class="box">
+        <img src="image123/2.png" alt="">
+        <span  class="mask">我是遮罩层2</span>
+    </a>
+    <a id="box2" class="box">
+        <img src="image123/3.jpg" alt="">
+        <span class="mask">我是遮罩层3</span>
+    </a>
+</div>
+</body>
+<script src="animate2.js"></script>
+<script src="utils20160916.js"></script>
+<script src="following.js"></script>
+<script>
+    var boxs=utils.getElesByClass("box");
+    for(var i=0;i<boxs.length;i++){
+        follow("box"+i);
+    }
+</script>
+<!--<script charset="utf-8">
+
+    var box=document.getElementById("box");
+    var span=document.getElementById("mask");
+    box.onmouseenter=function(e){//用enter代替over事件
+        e=e||window.event;
+        //先要判断鼠标是从盒子的那个方向进来的
+        var res=getDirection(this,e);//res即为鼠标进入的方向,res是0，1，2，3
+        //console.log(res);
+        switch (res){
+            case 0:
+                    utils.css(span,{left:-200,top:0});
+            break;
+            case 1:
+                utils.css(span,{left:0,top:200});
+                break;
+            case 2:
+                utils.css(span,{left:200,top:0});
+                break;
+            case 3:
+                utils.css(span,{left:0,top:-200});
+                break
+        }
+        animate(span,{left:0,top:0},500);
+    };
+
+
+    function getDirection(box,e){//获取鼠标进入方向
+        //当鼠标进入的那一刻，鼠标的x，y向坐标
+        var x= e.clientX-box.offsetLeft-box.offsetWidth/2;
+        var y= box.offsetTop+box.offsetHeight/2- e.clientY;
+        //根据坐标调用Math.atan2(y,x)求弧度角，并转化为角度
+        var ang=Math.atan2(y,x)*(180/Math.PI);//弧度转角度
+        //这个角度的区间是【-180，+180】(区间)；
+        //ang+180之后是【0，360】
+        //ang加180后除以90，返回【0，4】，但是不一定是正数
+        //再Math.round();四舍五入取整
+        //再%4，返回0（L），1（B），2（R），3（T）
+
+
+        //需要返回值代表哪个方向
+        return Math.round((ang+180)/90)%4;
+
+    }
+    box.onmouseleave=function(e){
+        var res=getDirection(box,e);
+        switch (res){
+            case 0:
+                animate(span,{left:-200,top:0},500);
+                break;
+            case 1:
+                animate(span,{left:0,top:200},500);
+                break;
+            case 2:
+                animate(span,{left:200,top:0},500);
+                break;
+            case 3:
+                animate(span,{left:0,top:-200},500);
+                break;
+        }
+    }
+
+
+
+</script>-->
+</html>

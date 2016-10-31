@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: move;
+            -webkit-user-select: none;
+            overflow: hidden;
+            background: gray;
+        }
+
+        div img {
+            width: 100px;
+            height: 100px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="top:100px;left: 100px;"><img src="image123/1.png" alt=""></div>
+<div id="div2" style="top:150px;left: 200px;"><img src="image123/2.png" alt=""></div>
+<div id="div3" style="top:200px;left: 300px;"><img src="image123/3.jpg" alt=""></div>
+<div id="div4" style="top:250px;left: 400px;"><img src="image123/1.png" alt=""></div>
+</body>
+<script src="event2.js"></script>
+<script charset="UTF-8">
+    function down(e) {
+        this.x = this.offsetLeft;
+        this.y = this.offsetTop;
+        this.mx = e.pageX;
+        this.my = e.pageY;
+
+        if (this.setcenter) {
+            on(this, "mousemove", move);
+            on(this, "mouseup", up);
+            this.setCapture();
+        } else {
+            this.Move = move.bind(this);
+            this.Up = up.bind(this);
+            on(document, "mousemove", this.Move);
+            on(document, "mouseup", this.Up);
+        }
+        e.preventDefault();
+        selfRun.call(this, "selfdrag1", e);
+        //selfRun方法的运行，被称之为“通知”，就是但这个主行为执行的时候，去遍历执行以"selfdragstart"为去吩咐的那个组。
+        //特别强调的是：selfRun第一个参数是什么，就规定了代表down方法的事件类型是什么。这就是发布事件
+    }
+    function move(e) {
+        this.style.left = this.x + (e.pageX - this.mx) + "px";
+        this.style.top = this.y + (e.pageY - this.my) + "px";
+        selfRun.call(this, "selfdrag2", e);
+    }
+    function up(e) {
+        if (this.releaseCapture) {
+            this.releaseCapture();
+            off(this, "mousemove", this.move);
+            off(this, "mouseup", this.up);
+        } else {
+            off(document, "mousemove", this.Move);
+            off(document, "mouseup", this.Up);
+        }
+        selfRun.call(this, "selfdrag3", e);
+    }
+
+    function clearEffect() {
+        window.clearTimeout(this.flyTimer);
+        window.clearTimeout(this.dropTimer);
+    }
+
+    function getSpeed(e) {
+        if (this.pre) {
+            this.speed = e.pageX - this.pre;
+            this.pre = e.pageX;
+        } else {
+            this.pre = e.pageX;
+        }
+    }
+
+    function fly() {
+        console.log(this.speed);
+        this.speed *= 0.98;
+        var maxR = (document.documentElement.clientWidth || document.body.clientWidth) - this.offsetWidth;
+        var curX = this.offsetLeft + this.speed;
+        if (curX <= 0) {
+            this.style.left = 0;
+            this.speed *= -1
+        } else if (curX >= maxR) {
+            this.style.left = maxR + "px";
+            this.speed *= -1;
+        } else {
+            this.style.left = curX + "px";
+        }
+        if (Math.abs(this.speed) >= 0.5) {
+            this.flyTimer = window.setTimeout(processThis(fly, this), 20);
+        }
+    }
+
+    function drop() {
+        if (this.dropSpeed) {
+            this.dropSpeed += 9;
+        } else {
+            this.dropSpeed = 9;
+        }
+        this.dropSpeed *= 0.98;
+        var maxB = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+        var curY = this.offsetTop + this.dropSpeed;
+        if (curY > maxB) {
+            this.style.top = maxB + "px";
+            this.dropSpeed *= -1;
+            this.flag++;
+        } else {
+            this.style.top = curY + "px";
+            this.flag = 0;
+        }
+        if (this.flag < 2) {
+            this.dropTimer = window.setTimeout(processThis(drop, this), 20);
+        }
+    }
+
+    function processThis(fn, obj) {
+        return function (e) {
+            fn.call(obj, e);
+        }
+    }
+
+    var eles = document.getElementsByTagName("div");
+    for (var i = 0; i < eles.length; i++) {
+        debugger;
+        var ele = eles[i];
+        on(ele, "mousedown", down);
+        on(ele, "selfdrag1", clearEffect);
+        on(ele, "selfdrag2", getSpeed);
+        on(ele, "selfdrag3", fly);
+        on(ele, "selfdrag3", drop);
+    }
+</script>
+</html>

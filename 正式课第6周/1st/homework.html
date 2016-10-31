@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+1.with运算符的作用以及优缺点
+1）简要说明
+with 语句可以方便地用来引用某个特定对象中已有的属性，但是不能用来给对象添加属性。要给对象创建新的属性，必须明确地引用该对象。
+
+2）语法格式
+with(object instance)
+{
+//代码块
+}
+有时候，我在一个程序代码中，多次需要使用某对象的属性或方法，照以前的写法，都是通过:对象.属性或者对象.方法这样的方式来分别获得该对象的属性和方法，着实有点麻烦，学习了with语句后，可以通过类似如下的方式来实现：
+with(objInstance)
+{
+var str = 属性1;
+.....
+} 去除了多次写对象名的麻烦。
+
+3）举例
+<script language="javascript">
+    <!--
+    function Lakers() {
+        this.name = "kobe bryant";
+        this.age = "28";
+        this.gender = "boy";
+    }
+    var people=new Lakers();
+    with(people)
+    {
+        var str = "姓名: " + name + "<br>";
+        str += "年龄：" + age + "<br>";
+        str += "性别：" + gender;
+        document.write(str);
+    }
+    //-->
+</script>
+代码执行效果如下:
+姓名: kobe bryant
+年龄：28
+性别：boy
+<!--with 语句通常用来缩短特定情形下必须写的代码量。在下面的例子中，请注意 Math 的重复使用：
+
+x = Math.cos(3 * Math.PI) + Math.sin(Math.LN10);
+y = Math.tan(14 * Math.E);
+
+当使用 with 语句时，代码变得更短且更易读：
+
+with (Math) {
+x = cos(3 * PI) + sin(LN10);
+y = tan(14 * E);
+}-->
+
+
+2.常见的需要阻止的默认行为
+
+
+3.有条理的写出事件的兼容性问题
+</body>
+</html>

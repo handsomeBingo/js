@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            width: 100%;
+            height:100%;
+            overflow: hidden;
+            background: ghostwhite;
+        }
+        .box{
+            width:100px;
+            height:100px;
+            background: green;
+            position: absolute;
+            top:100px;
+            left:200px;
+            cursor: move;
+            z-index: 0;
+        }
+        .box img{
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+        #box2{
+            left:200px;
+            top:200px
+        }
+        #box3{
+            left:300px;
+            top:200px;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="box"><img src="image123/1.png" alt=""></div>
+<div class="box" id="box2"><img src="image123/2.png" alt=""></div>
+
+<script src="event_end.js"></script>
+<script>
+    var box=document.getElementById("box");
+    var box2=document.getElementById("box2");
+    var minL=0;
+    var minT=0;
+    var n=0;
+    var maxL=(document.documentElement.clientWidth||document.body.clientWidth)-box.offsetWidth;
+    var maxT=(document.documentElement.clientHeight||document.body.clientHeight)-box.offsetHeight;
+
+
+    function down(e){
+        e=e||window.event;
+        this["strX"]= e.clientX;
+        this["strY"]= e.clientY;
+        this["strL"]=this.offsetLeft;
+        this["strT"]=this.offsetTop;
+        var that=this;
+        this.Move=function(e){
+            move.call(that,e)
+        }
+        this.Up=function(e){
+            up.call(that,e)
+        }
+        /*this.Move=processThis(move,this);
+        this.Up=processThis(up,this);*/
+        on(document,"mousemove",this.Move);
+        on(document,"mouseup",this.Up);
+        //在拖拽开始的时候结束盒子的动画
+        window.clearInterval(this.flyTimer);
+        window.clearInterval(this.dropTimer);
+        var oImgs=document.getElementsByTagName("img");
+        for(var i=0;i<oImgs.length;i++){//项目中常用这种方式禁止所有的图片的默认虚影行为
+            on(oImgs[i],"mousemove",function(e){
+                e.preventDefault();
+            })
+        }
+        this.style.zIndex=++n;
+    }
+
+    function move(e){
+        var curL= e.clientX-this["strX"]+this["strL"];
+        var curT= e.clientY-this["strY"]+this["strT"];
+        curL= curL<minL?minL:curL>maxL?maxL:curL;
+        curT= curT<minT?minT:curT>maxT?maxT:curT;
+        this.style.left=curL+"px";
+        this.style.top=curT+"px";
+        //计算水平方向的运动速度
+        if(!this["prev"]){
+            this["prev"]=this.offsetLeft;
+        }else{
+            this["speedFly"]=this.offsetLeft-this["prev"];
+            this["prev"]=this.offsetLeft;
+        }
+
+    }
+
+    function up(e){
+        off(document,"mousemove",this.Move);
+        off(document,"mouseup",this.Up);
+        fly.call(this);
+        drop.call(this);
+    }
+
+    function processThis(fn, obj) {
+        return function (e) {
+            fn.call(obj, e)
+        };
+        //拖拽结束后执行水平动画
+
+    }
+
+    on(box,"mousedown",down);
+    on(box2,"mousedown",down);
+    /*水平运动*/
+
+    function fly(){
+        if(Math.abs(speedFly)<0.5){//因为offsetLeft获取的值会自动进行四舍五入，如果加减小于一个0.5的值，对最后的结果不会产生任何的影响（盒子的位置就不动了），这时候清掉定时器
+            window.clearInterval(that.flyTimer);
+        }
+        var that=this;
+        var speedFly=this["speedFly"];
+        this.flyTimer=window.setInterval(function(){
+            speedFly*=0.98;//让速度每一次*=一个小于1的数字，速度会越来越小，实现衰减
+
+            var curL=that.offsetLeft+speedFly;
+            if(curL>maxL){
+                speedFly*=-1;
+            }else if(curL<minL){
+                speedFly*=-1;
+            }
+            that.style.left=curL+"px";
+        },17);
+    }
+
+    function drop(){
+        var that=this;
+        var speedDrop=9.8;
+        flag=0;
+        that.dropTimer=window.setInterval(function(){
+            if(flag>1){
+                window.clearInterval(that.dropTimer);
+                return;
+            }
+            speedDrop*=0.98;//让速度不断衰减
+            speedDrop+=10;//让下落的时候越来越快，让反弹的时候，越来越慢，因为下落的时候的速度越是正数，所以会越来越大，当反弹的时候速度是负值
+            var curT=that.offsetTop+speedDrop;
+            if(curT>maxT){
+                speedDrop*=-1;
+                curT=maxT;
+                flag++;
+            }else{
+                flag=0;
+            }
+            that.style.top=curT+"px";
+        },17);
+    }
+
+</script>
+</body>
+</html>

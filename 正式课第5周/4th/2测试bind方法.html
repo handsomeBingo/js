@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ie6-8事件</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #box{
+            width:100px;
+            height:100px;
+            background: magenta;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+</body>
+<script src="3.^event$.js"></script>
+<script charset="utf-8">
+    var oDiv=document.getElementById("box");
+    function fn1(){console.log(1,this)};
+    function fn2(){console.log(2,this)};
+    function fn3(){console.log(3,this)};
+    function fn4(){console.log(4,this)};
+    function fn5(){console.log(5)};
+    function fn6(){console.log(6)};
+    function fn7(){console.log(7)};
+    function fn8(){console.log(9)};
+    function fn9(){console.log(8)};
+    function fn10(){
+        unbind(oDiv,"click",fn10);
+        console.log(9,this===oDiv)};
+    function fn11(){console.log(10)};
+    function fn12(){console.log(11)};
+
+   /* bind(oDiv,"click",fn10);
+    bind(oDiv,"click",fn10);
+    bind(oDiv,"click",fn10);
+    bind(oDiv,"click",fn10);
+    bind(oDiv,"click",fn10);
+*/
+    oDiv.addEventListener("click",fn1,false);
+    oDiv.addEventListener("click",fn1,false);
+    oDiv.addEventListener("click",fn2,false);
+    oDiv.addEventListener("click",fn3,false);
+    oDiv.addEventListener("click",fn4,false);
+  /* oDiv.attachEvent("onclick",fn1);
+   oDiv.attachEvent("onclick",fn1);
+   oDiv.attachEvent("onclick",fn2);
+   oDiv.attachEvent("onclick",fn3);
+   oDiv.attachEvent("onclick",fn4);*/
+   /* on(oDiv,"click",fn1);
+    on(oDiv,"click",fn2);
+    on(oDiv,"click",fn3);
+    on(oDiv,"click",fn4);
+    on(oDiv,"click",fn5);
+    on(oDiv,"click",fn6);
+    on(oDiv,"mouseover",fn7);
+    on(oDiv,"mouseover",fn8);
+    off(oDiv,"click",fn4);
+*/
+
+/* debugger;
+* 1)F10 逐语句调试，如果当前语句是函数执行，F11即可进入该方法，shift+F11即可跳出该方法
+* 2)F8 当多断点调试时，逐断点调试 跳出该断点
+* 3)添加监视 在chrome中选中变量，右键add to watch就可以时时查看变量的值的变化，也可以在右侧watch窗口点击“+”，输入变量名也可以添加监视
+* 4)在调试的过程中之哟执行过的代码才会重新赋值
+* 5)使用外链式的文件，推荐使用ctrl+F5
+* 6)查看网络请求去nerwork
+* 7)资源在 source选项卡中
+* 8)检查html结构建议使用Element
+*
+* */
+
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="file" type="file" multiple accept="image/*"/><!--//type file是上传文件 multiple是上传多个 accept="image/*":只能选择图片-->
+<input id="btn" type="button" value="sure" >
+</body>
+<script>
+    var input1=document.querySelector("#file");
+    var btn=document.querySelector("#btn");
+    //把选择的文件获取到
+    var files=input1.files;
+//    console.log(files);
+    btn.onclick=function(){
+        for(var i=0;i<files.length;i++){
+            showImg(files[i]);
+        }
+    }
+    function showImg(file){
+        console.log(1223)
+        var name=file.name;
+        var size=Math.floor(file.size/1024);
+        var type=file.type;
+        if(!/image\//.test(type)){
+            return false;
+        }
+        if(size>500){
+            return false;
+        }
+        if(typeof FileReader=="undefined"){
+            alert("this browser do not support this function");
+        }else{
+            var reader=new FileReader;
+            reader.readAsDataURL(file);//把文件以DataURL形式读取出来，并显示出来
+            reader.onload=function(){
+                oDiv2.innerHTML+="<img src="+this.result+">";
+            }
+
+
+        }
+
+
+    }
+
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>键盘事件</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<input type="text" id="input" placeholder="输入">
+</body>、
+<script>
+    //style="ime-mode:disabled"仅在ie8（含）以下用于解决keyCode=229问题,chrome，opera，safari
+    var input=document.getElementById("input");
+    input.onkeyup=function(e){
+        //base.ImeMode=ImeMode.Disable;
+       // debugger
+        e=e||window.event;
+        console.log(e.keyCode);
+    }
+    /*
+    * 键盘事件对象：keyboardEvent
+    * keyCode:代表键盘的编码；13：enter；48-57：代表0-9  8：backspace； 上： 下： 左： 右：
+    *
+    *
+    * */
+</script>
+</html>

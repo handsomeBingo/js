@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟输入框</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .wrap{
+            position: relative;
+            width:500px;
+            height:40px;
+            margin:30px auto;
+        }
+        .wrap input{
+            padding:0 10px;
+            width:476px;
+            height:40px;
+            outline: none;
+        }
+        .wrap ul{
+            display: none;
+            list-style: none;
+            position: absolute;
+            top:43px;
+            width:498px;
+            border:1px solid #ccc;
+        }
+        .wrap ul li{
+            height:30px;
+            line-height: 30px;
+        }
+        .wrap a{
+            display: block;
+            padding:0 10px;
+            text-decoration: none;
+            color: #999;
+        }
+        .wrap a:hover{
+            background: lightblue;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+    <input type="text" isSearch="yes" placeholder="轻轻的风">
+    <ul>
+        <li><a href="javasript:void 0">zf</a></li>
+        <li><a href="javasript:void 0">zf</a></li>
+        <li><a href="javasript:void 0">zf</a></li>
+        <li><a href="javasript:void 0">zf</a></li>
+        <li><a href="javasript:void 0">zf</a></li>
+        <li><a href="javasript:void 0">zf:html</a></li>
+    </ul>
+</div>
+</body>
+<script charset="UTF-8">
+    var wrap=document.getElementById("wrap");
+    var input=wrap.getElementsByTagName("input")[0];
+    var ul=wrap.getElementsByTagName("ul")[0];
+    //重新获得焦点的时候和键盘弹起的时候执行的代码和逻辑是相同的
+    wrap.onclick=wrap.onkeyup=function(e){
+        e=e||window.event;
+        e.target= e.target|| e.srcElement;
+        if(e.target.getAttribute("isSearch")=="yes"){
+            //是我要找的那个输入框
+            var inputVal= e.target.value;//获取输入框输入的值
+            var reg=/^\s*$/;//可以验证一个到多个空字符的正则，用于验证输入框是否输入或者输入了非空内容
+            if(reg.test(inputVal)){
+                //如果正则匹配成功，那就说明输入框内什么也没有，那么对应下面列表就可以隐藏了
+                ul.style.display="none";
+                return;
+            }
+            //代码运行到此，说明输入的值没有通过正则的验证，即输入了非空的内容，这时候让ul显示出来即可
+            ul.style.display="block";
+        }
+        ul.onclick=function(e){
+            e=e||window.event;
+            if(e.target.nodeName.toLocaleLowerCase()=="a"){//判断事件源是a标签
+                input.value= e.target.innerHTML;
+                this.style.display="none";//点击后，下拉列表中的内容填充到输入框中，同时列表需要隐藏掉
+
+            }
+        }
+    }
+
+
+
+</script>
+</html>
