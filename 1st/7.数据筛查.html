@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<input type="text" ng-model="query">
+<body ng-controller="myCtrl">
+<table class="table-bordered">
+    <tr>
+        <th>catalogue</th>
+        <th ng-click="flag1=price;flag=!flag">price</th>
+        <th ng-click="flag1=dead;flag=!flag">deadline</th>
+    </tr>
+    <tr ng-repeat="data in datas | filter:{price:query} | orderBy:flag1:flag track by $index">
+        <td>{{data.name}}</td>
+        <td>{{data.price}}</td>
+        <td>{{data.dead}}</td>
+    </tr>
+
+</table>
+</body>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app = angular.module("appModule", []);
+    app.controller("myCtrl", ["$scope", function ($scope) {
+        $scope.datas = [
+            {name: "brush", price: 15, dead: 361},
+            {name: "cup", price: 43, dead: 362},
+            {name: "toothpaste", price: 22, dead: 105},
+        ]
+    }]);
+</script>
+</html>

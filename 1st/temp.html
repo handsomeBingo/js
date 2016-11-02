@@ -1,0 +1,17 @@
+<div>
+    <div class="title" ng-click="show()">{{title}}</div>
+    <div class="content" ng-transclude ng-show="flag"></div>
+</div>
+<style>
+    .title{
+        width: 150px;
+        line-height: 30px;
+        background: aqua;
+    }
+    .content{
+        width: 150px;
+        height: 150px;
+        border: 1px solid red;
+        background: green;
+    }
+</style>
