@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>ngmodel</title>
+</head>
+<body ng-controller="myCtrl">
+<input type="text" zf-model="name">{{name}}
+<input type="text" zf-model="age">{{age}}
+
+<!--双向绑定的实现：监听输入框的内容，如果改变，赋值给作用域的值，并调用$apply通知视图刷新，当数据变化，我们用$watch监控变化，方法将最新的值赋给输入框中；-->
+</body>
+<script src="lab/angular/angular.js"></script>
+<script>
+    var app=angular.module("appModule",[]);
+    //1.获取input的值，并挂载在作用域下
+    //2.当作用域上的值发生变化，让input赋值，并且更新
+    app.controller("myCtrl",function($scope){
+        //$scope.name="hello";
+    });
+    app.directive("zfModel",function(){
+        return {
+            //在link函数中获取行内的zf-model值，
+            link:function(scope,ele,attrs){
+              ele.on("input",function(){
+                  //oninput是input表单元素的键入事件
+                  //给name赋值，等于当前写入的内容，视图变化，导致数据变化，但是不能直接用scope.name=this.value;因为这个变量不能写死了,因为这是个指令，我们并非为name写的，是要适用于一切调用该指令的情景，如果这里写一个scope.name=this.value,这个指令只能专用于一个zf-model="name"的情景，如果我们再搞一个input，<input type="text" zf-model="age">{{age}}，这个指令就不能用了，所以我们用atrrs["zfModel"]取这个指令的属性值，所以要用写下面这种方式
+                  scope[attrs["zfModel"]]=this.value;
+                  //数据虽然变了，
+                  scope.$apply();
+                  ///////////////////////
+                  scope.$watch(attrs["zfModel"],function(newVal,oldVal){
+                     //监控值得变化，比如说name一变，要给视图赋值
+                     ele.val(newVal);
+                  });
+
+              })
+            },
+          /*  scope:{
+
+            }*/
+        }
+    })
+
+</script>
+</html>

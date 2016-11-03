@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>服务</title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+</body>
+<script src="lab/angular/angular.js"></script>
+<script>
+    var app=angular.module("appModule",[]);
+    //服务 $timeout $interval $http 将公共的功能提取出来，并且服务是单例（唯一）的；
+    //+ - * / 四个方法，要在firstCtrl和secondCtrl中使用
+    //在angular中提供了五种自定义服务，一种装饰
+    //最大的服务 provider
+    app.provider("calc",function(){
+       //注意第一个参数不可以带$符号
+        this.currency="€"
+        this.$get=function(){
+            return {
+                "+":(a,b) => this.currency+(a+b),
+                "-":(a,b) => this.currency+(a-b),
+                "*":(a,b) => this.currency+(a*b),
+                "/":(a,b) => this.currency+(a/b)
+            }
+        }
+    });//默认会new provider的回调函数（第二个参数），当用的时候，把服务名作为控制器的形参传进去就好
+    app.config(function(calcProvider){
+        //calcProvider是我们声明的calc服务的第二个回调函数的一个实例;即便我们将这个配置写在创建服务的上面，这个配置也是晚于创建服务执行；
+        calcProvider.currency="%";
+    });
+    app.controller("firstCtrl",function($scope,$timeout,calc){
+        var res=calc["+"](1,2);
+        console.log(res);
+    });
+    app.controller("secondCtrl",function($scope,$timeout){
+        
+    });
+</script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>service</title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+</body>
+<script src="lab/angular/angular.js"></script>
+<script>
+    var app=angular.module("appModule",[]);
+    app.service("calc",function(){
+        this.currency="€";
+        this["+"]=(a,b) => this.currency+(a+b);
+        this["-"]=(a,b) => this.currency+(a-b);
+        this["*"]=(a,b) => this.currency+(a*b);
+        this["/"]=(a,b) => this.currency+(a/b);
+    });//service的回调函数是factory回调函数return的那个对象的构造函数，也就说factory回调函数return的那个对象是service的回调函数的实例；
+
+    app.controller("firstCtrl",function($scope,$timeout,calc){
+        var res=calc["+"](1,2);
+        console.log(res);
+    });
+    app.controller("secondCtrl",function($scope,$timeout){
+
+    });
+</script>
+</html>

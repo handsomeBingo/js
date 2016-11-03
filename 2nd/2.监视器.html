@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>监视器</title>
+</head>
+<body ng-controller="myCtrl">
+{{name}}
+<!--{{total()}}-->
+</body>
+<script src="lab/angular/angular.js"></script>
+<script>
+    var app = angular.module("appModule", []);
+    app.controller("myCtrl", function ($scope,$timeout,$interval) {
+        //尽量减少观察者
+        //脏值检查最多执行10次
+        $scope.total =()=>{//total方法最多执行两次
+            console.log(1111);
+        };
+        $scope.$watch("name", function (newVal, oldVal) {
+            // newVal新值 oldVal 旧制
+            //当数据变化时再应用，
+            setTimeout(function(){
+                $scope.name="hello";
+                //在这里虽然那么变了，但是并没有通知视图改变
+                $scope.$apply();//每次angular想更新视图的时候，会调用$apply方法;但是angular内置的指令以及内置的函数参数（如$timeout，$interval等函数参数）会自动调用调用$apply不用手动调用
+            },1000);
+            $interval.cancel();//取消定时器，清除定时器
+            console.log(newVal,oldVal);
+        });
+    });
+</script>
+</html>

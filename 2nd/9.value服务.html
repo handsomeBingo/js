@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>service</title>
+</head>
+<body>
+<div ng-controller="firstCtrl"></div>
+<div ng-controller="secondCtrl"></div>
+</body>
+<script src="lab/angular/angular.js"></script>
+<script>
+    var app=angular.module("appModule",[]);
+    app.value("calc",{
+        currency:"€",
+        "+":(a,b) => (a+b),
+        "-":(a,b) => (a-b),
+        "*":(a,b) => (a*b),
+        "/":(a,b) => (a/b)
+    });//factory的返回值，会将默认对象包装一层函数，装递给factory
+
+    app.controller("firstCtrl",function($scope,$timeout,calc){
+        var res=calc["+"](1,2);
+        console.log(res);
+    });
+    app.controller("secondCtrl",function($scope,$timeout){
+
+    });
+</script>
+</html>
