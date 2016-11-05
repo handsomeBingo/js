@@ -1,0 +1,19 @@
+1、进制计算
+     一个字节由8个位组成，每个位的最大值是1，
+     当前位大的
+
+2、buffer定义
+    1、通过数字方式创建buffer
+    var buffer=new Buffer();
+    2、通过数组创建buffer
+    var buffer=new Buffer();
+
+//////////////////////
+Object.keys(obj);方法，返回值是一个数组，数组的每一项是对象的属性名；
+///////////////////////////
+fs.writeFile/Sync+
+fs.readFile/Sync+
+fs.appendFile/Sync
+fs.mkdir/Sync
+fs.exists/Sync
+fs.stat/Sync isFile() isDirectory()
